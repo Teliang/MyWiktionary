@@ -1,30 +1,51 @@
 package org.teliang.android.mywiktionary
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : WebBaseActivity() {
+
+    val LOG_TAG = "MainActivity"
+
+    override lateinit var myWebView: WebView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val myWebView: WebView = findViewById(R.id.main_webview)
+        myWebView = findViewById(R.id.main_webview)
         myWebView.loadUrl("https://www.wiktionary.org/")
         myWebView.webViewClient = WebViewClient()
+
+        val mySwipeRefreshLayout: SwipeRefreshLayout = findViewById(R.id.main_swiperefresh)
+
+        webSwipeReload(mySwipeRefreshLayout)
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        val myWebView: WebView = findViewById(R.id.main_webview)
-        // Check if the key event was the Back button and if there's history
-        if (keyCode == KeyEvent.KEYCODE_BACK && myWebView.canGoBack()) {
-            myWebView.goBack()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        val id = item.itemId
+        if (id == R.id.action_settings) {
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+            return true
+        } else if (id == R.id.action_about) {
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
             return true
         }
-        // If it wasn't the Back key or there's no web page history, bubble up to the default
-        // system behavior (probably exit the activity)
-        return super.onKeyDown(keyCode, event)
+        return super.onOptionsItemSelected(item)
     }
-
 }

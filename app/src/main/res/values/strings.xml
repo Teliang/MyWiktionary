@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MyWiktionary</string>
+    <string name="action_about">about</string>
+    <string name="action_settings">settings</string>
+    <string name="setting_text">TODO: set language</string>
+    <string name="about_text">A simple Wiktionary application</string>
 </resources>
