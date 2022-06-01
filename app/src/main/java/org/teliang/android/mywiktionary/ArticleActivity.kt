@@ -22,6 +22,10 @@ class ArticleActivity : WebBaseActivity() {
 
         webSwipeReload(mySwipeRefreshLayout)
 
+        this.supportActionBar
+            ?.setHomeAsUpIndicator(com.google.android.material.R.drawable.ic_m3_chip_close)
+        this.supportActionBar?.setDisplayHomeAsUpEnabled(true);
+
 //      user configure
         var language = "en"
         val word = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
@@ -29,5 +33,9 @@ class ArticleActivity : WebBaseActivity() {
         myWebView.loadUrl("https://$language.m.wiktionary.org/wiki/$word")
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish() // close this activity as oppose to navigating up
+        return false
+    }
 
 }
