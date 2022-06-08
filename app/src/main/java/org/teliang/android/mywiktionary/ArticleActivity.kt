@@ -5,22 +5,20 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 class ArticleActivity : WebBaseActivity() {
     private val LOG_TAG = "ArticleActivity"
 
-    override lateinit var myWebView: WebView
+    override val webViewId = R.id.article_webview
+    override val swipeRefreshId = R.id.article_swiperefresh
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
-        myWebView = findViewById(R.id.article_webview)
+        val myWebView: WebView = findViewById(webViewId)
         myWebView.webViewClient = WebViewClient()
 
-        val mySwipeRefreshLayout: SwipeRefreshLayout = findViewById(R.id.article_swiperefresh)
-
-        webSwipeReload(mySwipeRefreshLayout)
+        setWebSwipeReload()
 
         this.supportActionBar
             ?.setHomeAsUpIndicator(com.google.android.material.R.drawable.ic_m3_chip_close)

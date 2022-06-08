@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 abstract class WebBaseActivity : AppCompatActivity() {
-    abstract val myWebView: WebView
 
+    abstract val webViewId: Int
+
+    abstract val swipeRefreshId: Int
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        val myWebView: WebView = findViewById(webViewId)
         // Check if the key event was the Back button and if there's history
         if (keyCode == KeyEvent.KEYCODE_BACK && myWebView.canGoBack()) {
             myWebView.goBack()
@@ -20,9 +23,9 @@ abstract class WebBaseActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    protected fun webSwipeReload(
-        mySwipeRefreshLayout: SwipeRefreshLayout
-    ) {
+    protected fun setWebSwipeReload() {
+        val mySwipeRefreshLayout: SwipeRefreshLayout = findViewById(swipeRefreshId)
+        val myWebView: WebView = findViewById(webViewId)
         mySwipeRefreshLayout.setOnRefreshListener {
             myWebView.reload()
             //should add to web finish callback

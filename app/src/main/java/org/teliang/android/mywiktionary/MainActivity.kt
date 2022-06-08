@@ -6,24 +6,23 @@ import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 class MainActivity : WebBaseActivity() {
 
     val LOG_TAG = "MainActivity"
 
-    override lateinit var myWebView: WebView
+    override val webViewId = R.id.main_webview
+
+    override val swipeRefreshId = R.id.main_swiperefresh
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        myWebView = findViewById(R.id.main_webview)
+        val myWebView: WebView = findViewById(webViewId)
         myWebView.loadUrl("https://www.wiktionary.org/")
         myWebView.webViewClient = WebViewClient()
 
-        val mySwipeRefreshLayout: SwipeRefreshLayout = findViewById(R.id.main_swiperefresh)
-
-        webSwipeReload(mySwipeRefreshLayout)
+        setWebSwipeReload()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
